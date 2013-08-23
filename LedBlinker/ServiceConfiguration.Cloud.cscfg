@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="LedBlinker" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="LedBlinkService">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cvledblinker;AccountKey=o5BrdG21ah/UYhOCJ6sbJ72L1I6ocDv8hGBeONcf0fb1Q73T049p89/AEtz1p9xqZMZOAVAGoVvpKr7vlVKiXQ==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

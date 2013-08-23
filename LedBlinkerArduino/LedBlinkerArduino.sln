@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LedBlinkerArduino", "LedBlinkerArduino.vcxproj", "{08BC4397-DE55-4F8B-8092-D09A854E7380}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08BC4397-DE55-4F8B-8092-D09A854E7380}.Debug|Win32.ActiveCfg = Debug|Win32
+		{08BC4397-DE55-4F8B-8092-D09A854E7380}.Debug|Win32.Build.0 = Debug|Win32
+		{08BC4397-DE55-4F8B-8092-D09A854E7380}.Release|Win32.ActiveCfg = Release|Win32
+		{08BC4397-DE55-4F8B-8092-D09A854E7380}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

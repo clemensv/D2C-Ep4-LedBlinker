@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Areas">
+      <UniqueIdentifier>{ed002204-427c-4e13-a378-a36accb43cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger">
+      <UniqueIdentifier>{613a7f29-e851-446e-947d-d0d0c4d8247f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Views">
+      <UniqueIdentifier>{509712c5-0b5b-480a-85ab-2de01b7c1fe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Views\RouteDebugger">
+      <UniqueIdentifier>{6f2837a8-69ec-4310-b158-eb93a86ca19d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Scripts">
+      <UniqueIdentifier>{7e2bc38a-a398-44c2-96df-34c84d7bbe52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Models">
+      <UniqueIdentifier>{5af1ebb2-d99e-4fe8-bc9b-f8cb017d4d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Controllers">
+      <UniqueIdentifier>{a22e9c55-2381-412e-ba3e-09373d334d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Content">
+      <UniqueIdentifier>{03e96ab6-c28a-4d2b-92fb-3b480afe7a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Areas\RouteDebugger\Components">
+      <UniqueIdentifier>{41162757-2865-4468-9fe3-a59d7c9d4e29}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LedBlinkerArduino.ino" />
+    <None Include="Areas\RouteDebugger\Views\RouteDebugger\Index.cshtml">
+      <Filter>Areas\RouteDebugger\Views\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Scripts\detect.js">
+      <Filter>Areas\RouteDebugger\Scripts</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\RouteDebuggerConfig.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\RouteDebuggerAreaRegistration.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\RequestHelper.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\RouteInfo.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\RouteDataInfo.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\InspectData.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\HttpParameterDescriptionInfo.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\ControllerSelectionInfo.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\ActionSelectionLog.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Models\ActionSelectionInfo.cs">
+      <Filter>Areas\RouteDebugger\Models</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\InspectHandler.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\InspectControllerSelector.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\InspectActionSelector.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\InspectActionInvoker.cs">
+      <Filter>Areas\RouteDebugger</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Controllers\RouteDebuggerController.cs">
+      <Filter>Areas\RouteDebugger\Controllers</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Content\rdstyle.css">
+      <Filter>Areas\RouteDebugger\Content</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Components\TypeHelper.cs">
+      <Filter>Areas\RouteDebugger\Components</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Components\HttpParameterBindingExtensions.cs">
+      <Filter>Areas\RouteDebugger\Components</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Components\DictionaryExtensions.cs">
+      <Filter>Areas\RouteDebugger\Components</Filter>
+    </None>
+    <None Include="Areas\RouteDebugger\Components\ActionSelectSimulator.cs">
+      <Filter>Areas\RouteDebugger\Components</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Visual Micro\.LedBlinkerArduino.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

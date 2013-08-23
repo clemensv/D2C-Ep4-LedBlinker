@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{08BC4397-DE55-4F8B-8092-D09A854E7380}</ProjectGuid>
+    <RootNamespace>LedBlinkerArduino</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Arduino\hardware\arduino\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\variants\standard;C:\Program Files (x86)\Arduino\libraries\SPI;C:\Program Files (x86)\Arduino\libraries\SPI\utility;C:\Program Files (x86)\Arduino\libraries\Ethernet;C:\Program Files (x86)\Arduino\libraries\Ethernet\utility;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\;c:\program files (x86)\arduino\hardware\tools\avr\avr\;c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\Users\clemensv\Documents\Arduino\LedBlinkerArduino\Visual Micro\.LedBlinkerArduino.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <PreprocessorDefinitions>__AVR_ATmega328P__;ARDUINO=105;__AVR__;F_CPU=16000000L;__cplusplus;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Arduino\hardware\arduino\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\variants\standard;C:\Program Files (x86)\Arduino\libraries\SPI;C:\Program Files (x86)\Arduino\libraries\SPI\utility;C:\Program Files (x86)\Arduino\libraries\Ethernet;C:\Program Files (x86)\Arduino\libraries\Ethernet\utility;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\;c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\;c:\program files (x86)\arduino\hardware\tools\avr\avr\;c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>C:\Users\clemensv\Documents\Visual Studio 2012\Projects\LedBlinker\LedBlinkerArduino\Visual Micro\.LedBlinkerArduino.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>__AVR_ATmega328P__;ARDUINO=105;__AVR__;F_CPU=16000000L;__cplusplus;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Areas\RouteDebugger\Components\ActionSelectSimulator.cs" />
+    <None Include="Areas\RouteDebugger\Components\DictionaryExtensions.cs" />
+    <None Include="Areas\RouteDebugger\Components\HttpParameterBindingExtensions.cs" />
+    <None Include="Areas\RouteDebugger\Components\TypeHelper.cs" />
+    <None Include="Areas\RouteDebugger\Content\rdstyle.css" />
+    <None Include="Areas\RouteDebugger\Controllers\RouteDebuggerController.cs" />
+    <None Include="Areas\RouteDebugger\InspectActionInvoker.cs" />
+    <None Include="Areas\RouteDebugger\InspectActionSelector.cs" />
+    <None Include="Areas\RouteDebugger\InspectControllerSelector.cs" />
+    <None Include="Areas\RouteDebugger\InspectHandler.cs" />
+    <None Include="Areas\RouteDebugger\Models\ActionSelectionInfo.cs" />
+    <None Include="Areas\RouteDebugger\Models\ActionSelectionLog.cs" />
+    <None Include="Areas\RouteDebugger\Models\ControllerSelectionInfo.cs" />
+    <None Include="Areas\RouteDebugger\Models\HttpParameterDescriptionInfo.cs" />
+    <None Include="Areas\RouteDebugger\Models\InspectData.cs" />
+    <None Include="Areas\RouteDebugger\Models\RouteDataInfo.cs" />
+    <None Include="Areas\RouteDebugger\Models\RouteInfo.cs" />
+    <None Include="Areas\RouteDebugger\RequestHelper.cs" />
+    <None Include="Areas\RouteDebugger\RouteDebuggerAreaRegistration.cs" />
+    <None Include="Areas\RouteDebugger\RouteDebuggerConfig.cs" />
+    <None Include="Areas\RouteDebugger\Scripts\detect.js" />
+    <None Include="Areas\RouteDebugger\Views\RouteDebugger\Index.cshtml" />
+    <None Include="LedBlinkerArduino.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Visual Micro\.LedBlinkerArduino.vsarduino.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
