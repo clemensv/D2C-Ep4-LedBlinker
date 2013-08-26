@@ -5,8 +5,12 @@
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
-byte mac[] = { 	0x90, 0xA2, 0xDA, 0x0D, 0xBC, 0xAE };
-byte deviceId[] = { 0x00, 0x00, 0x00, 0x01 };
+static uint8_t mac[6] = { 0x90, 0xA2, 0xDA, 0x0D, 0xBC, 0xAE };
+static const byte deviceId[] = { 0x00, 0x00, 0x00, 0x01 };
+static const int LED_PIN = 9;
+int connected = 0;
+EthernetClient client;
+
 
 void setup() 
 {
@@ -14,16 +18,23 @@ void setup()
 	Serial.begin(115200);
 #endif
 	Ethernet.begin(mac);
-	pinMode(9, OUTPUT);
-	digitalWrite(9, HIGH);
+	pinMode(LED_PIN, OUTPUT);
+
+	// flash the LED to show that the program started
+	turnLedOn();
 	delay(500);
-	digitalWrite(9, LOW);
+	turnLedOff();
 }
 
+void turnLedOn()
+{
+	digitalWrite(LED_PIN, HIGH);
+}
 
-int connected = 0;
-EthernetClient client;
-
+void turnLedOff()
+{
+	digitalWrite(LED_PIN, LOW);
+}
 
 void loop() 
 {
@@ -64,11 +75,11 @@ void loop()
 				break;
 			case 1:
 				// turn LED on
-				digitalWrite(9,HIGH);
+				turnLedOn();
 				break;
 			case 2: 
 				// turn LED off 
-				digitalWrite(9, LOW);
+				turnLedOff();
 				break;
 			}
 		}
