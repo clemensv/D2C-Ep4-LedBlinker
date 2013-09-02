@@ -11,15 +11,17 @@ namespace LedBlinkService
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.SelfHost;
-   
+
     public static class SwitchServer
     {
+        static int timeout = 10000;
         static readonly ConcurrentDictionary<int, TcpClient> Connections =
             new ConcurrentDictionary<int, TcpClient>();
+        static AutoResetEvent ackAutoReset = new AutoResetEvent(false);
         static readonly TaskCompletionSource<bool> ClosingEvent = new TaskCompletionSource<bool>();
-        static readonly byte[] PingFrame = {0x00};
-        static readonly byte[] OnFrame = {0x01};
-        static readonly byte[] OffFrame = {0x02};
+        static readonly byte[] PingFrame = { 0x00 };
+        static readonly byte[] OnFrame = { 0x01 };
+        static readonly byte[] OffFrame = { 0x02 };
 
         public static void Run(IPEndPoint deviceEndPoint, IPEndPoint controlEndPoint)
         {
@@ -51,19 +53,24 @@ namespace LedBlinkService
                     {
                         try
                         {
+                            connection.NoDelay = true; // flush writes immediately to the wire
+                            connection.ReceiveTimeout = timeout;
                             NetworkStream stream = connection.GetStream();
-                            var buffer = new byte[64];
-                            if (await stream.ReadAsync(buffer, 0, 4) == 4)
+                            var readBuffer = new byte[64];
+                            if (await stream.ReadAsync(readBuffer, 0, 4) == 4)
                             {
-                                int deviceId = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(buffer, 0));
+                                int deviceId = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(readBuffer, 0));
                                 Connections[deviceId] = connection;
                                 try
                                 {
                                     do
                                     {
-                                        if (await stream.ReadAsync(buffer, 0, 4) == 4)
+                                        if (await stream.ReadAsync(readBuffer, 0, 1) == 1)
                                         {
-                                            // discard telemetry records for the time being
+                                            if (readBuffer[0] == 0x00) // ACK
+                                            {
+                                                ackAutoReset.Set();
+                                            }
                                         }
                                         else
                                         {
@@ -109,9 +116,7 @@ namespace LedBlinkService
 
         static void PingConnections()
         {
-            Task.WaitAll(
-                Connections.Values.Select(
-                    connection => connection.GetStream().WriteAsync(PingFrame, 0, PingFrame.Length)).ToArray());
+            Task.WaitAll(Connections.Values.Where(c => c != null).Select(c => c.GetStream().WriteAsync(PingFrame, 0, PingFrame.Length)).ToArray());
         }
 
 
@@ -119,21 +124,37 @@ namespace LedBlinkService
         {
             TcpClient client;
 
-            if (Connections.TryGetValue(id, out client))
+            if (Connections.TryGetValue(id, out client) && client != null)
             {
                 try
                 {
+                    var networkStream = client.GetStream();
                     if (state)
                     {
-                        await client.GetStream().WriteAsync(OnFrame, 0, OnFrame.Length);
+                        await networkStream.WriteAsync(OnFrame, 0, OnFrame.Length);
                     }
                     else
                     {
-                        await client.GetStream().WriteAsync(OffFrame, 0, OffFrame.Length);
+                        await networkStream.WriteAsync(OffFrame, 0, OffFrame.Length);
                     }
-                    return true;
+
+                    if (ackAutoReset.WaitOne(timeout))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        client.Close();
+                        Connections[id] = null;
+                        return false;
+                    }
                 }
                 catch (SocketException)
+                {
+                    client.Close();
+                    Connections[id] = null;
+                }
+                catch (IOException)
                 {
                     client.Close();
                     Connections[id] = null;
@@ -142,18 +163,19 @@ namespace LedBlinkService
             return false;
         }
 
+
         static async Task RunControlEndpoint(IPEndPoint controlEP)
         {
             var config = new HttpSelfHostConfiguration(
                 new UriBuilder(Uri.UriSchemeHttp, "localhost", controlEP.Port).Uri);
-            config.Routes.MapHttpRoute("API", "{controller}/{id}", new {id = RouteParameter.Optional});
+            config.Routes.MapHttpRoute("API", "{controller}/{id}", new { id = RouteParameter.Optional });
             var controlServer = new HttpSelfHostServer(config);
             try
             {
                 await controlServer.OpenAsync();
                 Trace.TraceInformation("Control endpoint listening at {0}", config.BaseAddress);
             }
-            catch( Exception exception)
+            catch (Exception exception)
             {
                 controlServer.Dispose();
                 Trace.TraceError("Control endpoint cannot open, {0}", exception.Message);

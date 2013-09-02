@@ -1,5 +1,3 @@
-/* Web_Buzzer.pde - example sketch for Webduino library */
-
 #include "SPI.h"
 #include "Ethernet.h"
 #include "WebServer.h"
@@ -7,11 +5,13 @@
 #define DEBUG
 
 static uint8_t mac[6] = { 0x90, 0xA2, 0xDA, 0x0D, 0xBC, 0xAE };
-static uint8_t ip[4] = { 192, 168, 2, 210 };
+static uint8_t ip[4] = { 192, 168, 2, 107 };
 
 static const int LED_PIN = 9;
 #define PREFIX "/switch"
-WebServer webserver(PREFIX, 80);
+WebServer webserver(PREFIX, 8088);
+
+
 
 void turnLedOn()
 {
@@ -33,17 +33,21 @@ void switchCmd(WebServer &server, WebServer::ConnectionType type, char * tail, b
 #ifdef DEBUG
 		Serial.println("PUT");
 #endif
-		bool repeat;
+		bool parseResult;
 		char name[16], value[16];
 		do
 		{
-			repeat = server.nextURLparam(&tail, name, sizeof(name), value, sizeof(value));
+			parseResult = server.nextURLparam(&tail, name, sizeof(name), value, sizeof(value));
+			if ( parseResult != URLPARAM_OK )
+			{
+				break;
+			}
 #ifdef DEBUG
 			Serial.print(name);
 			Serial.print(":");
 			Serial.println(value);
 #endif
-			if (strncmp(name, "state", 5) == 0 )
+			if (strcmp(name, "state") == 0 )
 			{
 
 				if (strcmp(value, "true") == 0 || 
@@ -61,7 +65,7 @@ void switchCmd(WebServer &server, WebServer::ConnectionType type, char * tail, b
 				}
 			}
 		}
-		while ( repeat );
+		while ( true );
 		server.httpFail();
 	}
 	else

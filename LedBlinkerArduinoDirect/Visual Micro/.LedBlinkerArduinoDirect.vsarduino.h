@@ -31,8 +31,8 @@ void turnLedOff();
 //
 //
 
-#include "C:\Program Files (x86)\Arduino\hardware\arduino\variants\standard\pins_arduino.h" 
-#include "C:\Program Files (x86)\Arduino\hardware\arduino\cores\arduino\arduino.h"
-#include "C:\git\led-blinker\LedBlinkerArduinoDirect\LedBlinkerArduinoDirect.ino"
-#include "C:\git\led-blinker\LedBlinkerArduinoDirect\WebServer.h"
+#include "c:\arduino\hardware\arduino\variants\standard\pins_arduino.h" 
+#include "c:\arduino\hardware\arduino\cores\arduino\arduino.h"
+#include "C:\git\led-switcher\LedBlinkerArduinoDirect\LedBlinkerArduinoDirect.ino"
+#include "C:\git\led-switcher\LedBlinkerArduinoDirect\WebServer.h"
 #endif
