@@ -21,10 +21,10 @@ a fairly minimal fashion. We'll make this more complicated early enough :)
 
 Projects:
 
-LedBlinkService - WorkerRole host for Windows Azure Worker Role
-LedBlinker - Windows Azure Deployment Project
-LedBlinkerArduino - Arduino Client Project for the Gateway variant
-LedBlinkerArduinoDirect - Arduino Client from Episode 2
-LedBlinkerServer - Server Implementation
-LedBlinkerTestHost - Local test host to run the server outside of the WA Emulator
+* LedBlinkService - WorkerRole host for Windows Azure Worker Role
+* LedBlinker - Windows Azure Deployment Project
+* LedBlinkerArduino - Arduino Client Project for the Gateway variant
+* LedBlinkerArduinoDirect - Arduino Client from Episode 2
+* LedBlinkerServer - Server Implementation
+* LedBlinkerTestHost - Local test host to run the server outside of the WA Emulator
 
