@@ -28,6 +28,11 @@ Projects:
 * LedBlinkerServer - Server Implementation
 * LedBlinkerTestHost - Local test host to run the server outside of the WA Emulator
 
+The project assumes you have Visual Studio 2012 with the latest (2.1) Windows Azure Tools 
+(http://www.windowsazure.com/en-en/downloads/) and the Arduino plug-in from 
+http://www.visualmicro.com/ 
+
+
 (Oh, and, yes, I did roll the storage key that's embedded in the configuration, so you will have to use 
 your own storage account for diagnostics and obviously also publish to your own cloud service deployment.
 Guidelines are here: http://msdn.microsoft.com/en-us/library/windowsazure/ee460772.aspx) 
