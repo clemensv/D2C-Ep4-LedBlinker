@@ -1,23 +1,49 @@
-D2C-Ep3-LedBlinker
+D2C-Ep4-LedBlinker
 ==================
 
-Device to Cloud - Subscribe Episode 3 - LedBlinker Example
+Device to Cloud - Subscribe Episode 4 - LedBlinker Example
 
-This sample is a very simple cloud gateway for my little Arduino "Hello World" device that can do 
-nothing more than switching an LED. The cloud gateway, implemented in the LedSwitcherServer project (in 
+This sample is the evolution of the one from Episode 3, which still resides in its own, parallel repo at
+https://github.com/clemensv/D2C-Ep3-LedBlinker. I'm choosing not to use branches for these snapshots to
+preserve the state that matches the video episodes.  
+
+The solution does, still, just switch an LED. 
+
+The device gateway, which is implemented in the LedSwitcherServer project (in 
 C#), has a plain TCP endpoint for the device(s) to connect to from within the local network they're in. 
-The server will register and hold on to the connection and maintaining it with a ping sent every 55s
-to entertain NATs and the Windows Azure load-balancer on the route so that they don't cut the connection.
-We will explore this aspect and its impact on energy consumption in more detai in a coming episode. 
+The server will register and hold on to the connection and maintaining it with a ping sent every 235s 
+(just under 4 minutes) to entertain NATs and the Windows Azure load-balancer on the route so that they 
+don't cut the connection. We will explore this aspect and its impact on energy consumption in more detail 
+in a coming episode. 
 
 To the service consumer, the service exposes a very simple WebAPI endpoint (SwitchController) that allows 
-turning the device on or off. The WebAPI implementation looks up whether the requested device is available
-and either performs the switch by sending a command to the device or it reports a 404.
+turning the device on or off. 
 
-IMPORTANT: Mind that this sample is a step on a longer journey. It's not a best-practice example. There is
+New in this episode is that the WebAPI controller representing the device's "cloud-side" API and the device 
+gateway are intermediated by a pair of queues. The device gateway translates the native device protocol to
+to/from messages that flow on the queues. 
+
+The "device queue" exists once for each device and holds all messages destined for that device. We will 
+explore a number of pattern variations for this "mailbox" in coming episodes and the queue-per-device is 
+just the simplest one. The upside of using this approach is that the device now has a stable address to drop 
+messages into and that address is available even if the device is temporarily offline, which can easily 
+occur when devices are connected by some form of wireless radio. In coming episodes we will also explore 
+how to make these queues or other entities as devices get onboarded into the system, during "device provisioning".
+
+The other immediate gain is that the device gateway can now scale out across multiple nodes in a load balanced
+environment as connections drop and get reestablished, which we couldn't do with Episode 3's in-memory model.
+
+The "ingress" queue is shared across devices multiple devices and uses sessions to multiplex any replies from 
+the devices. The API implementation puts messages to the device onto the device queue and then waits on the 
+"ingress" queue supplying a correlation key (the session-id) for the reply. The per-device processing loop 
+pulls the message off the queue, sends the fitting protocol command to the device and enqueues the correlation key.
+As the device replies, the correlation key is dequeued and then used as the session-id for the reply sent to the
+ingress queue, which is how the pending API call gets the confirmation that the command succeeded.
+
+IMPORTANT: Mind that this sample is (still) a step on a longer journey. It's not a best-practice example. There is
 no implementation of authorization or any other secueity features as of yet. The composition is also not 
-representative of how you'd put together a robust service. The goal here is to show the basic principle in 
-a fairly minimal fashion. We'll make this more complicated early enough :)
+(yet) representative of how you'd put together a robust service. The goal here is to show the basic principle in 
+a fairly minimal fashion.
 
 Projects:
 

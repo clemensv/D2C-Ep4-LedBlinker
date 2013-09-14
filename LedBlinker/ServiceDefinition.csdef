@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="LedBlinker" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2013-03.2.0">
   <WorkerRole name="LedBlinkService" vmsize="Small">
-    <Runtime executionContext="elevated"/>
+    <Runtime executionContext="elevated" />
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
@@ -9,5 +9,8 @@
       <InputEndpoint name="deviceEP" protocol="tcp" port="10100" />
       <InputEndpoint name="controlEP" protocol="tcp" port="10101" />
     </Endpoints>
+    <ConfigurationSettings>
+      <Setting name="serviceBusConnectionString" />
+    </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

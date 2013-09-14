@@ -84,6 +84,7 @@ packages
 # Windows Azure Build Output
 csx
 *.build.csdef
+*.azurePubxml
 
 # Windows Store app package directory
 AppPackages/

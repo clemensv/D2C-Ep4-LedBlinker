@@ -4,70 +4,33 @@
     <Platform Name="arduino10x" Package="arduino" Platform="avr" Architecture="avr">
       <Board Name="ethernet" Description="Arduino Ethernet" CoreFolder="c:\arduino\hardware\arduino\cores\arduino" VariantFullPath="c:\arduino\hardware\arduino\variants\standard" McuIdePath="c:\arduino" McuSketchBookPath="C:\Users\ClemensV\Documents\Arduino" name="Arduino Ethernet" upload.protocol="arduino" upload.maximum_size="32256" upload.speed="115200" bootloader.low_fuses="0xff" bootloader.high_fuses="0xde" bootloader.extended_fuses="0x05" bootloader.path="optiboot" bootloader.file="optiboot_atmega328.hex" bootloader.unlock_bits="0x3F" bootloader.lock_bits="0x0F" build.variant="standard" build.mcu="atmega328p" build.f_cpu="16000000L" build.core="arduino" runtime.ide.path="c:\arduino" build.system.path="c:\arduino\hardware\arduino\system" runtime.ide.version="105" originalid="ethernet" build.core.vmresolved="c:\arduino\hardware\arduino\cores\arduino" build.core.parentfolder.vmresolved="c:\arduino\hardware\arduino\cores" build.core.coresparentfolder.vmresolved="c:\arduino\hardware\arduino" vm.core.include="arduino.h" vm.boardsource.path="c:\arduino\hardware\arduino" vm.platformname.name="avr" build.arch="AVR" ide.hint="Arduino 0023 and 1.0.x Ide" ide.location.key="Arduino" ide.location.ide.winreg="Arduino 1.0.x Application" ide.location.sketchbook.winreg="Arduino 1.0.x Sketchbook" ide.location.sketchbook.preferences="sketchbook.path" ide.location.sketchbook.default="%MYDOCUMENTS%\arduino" ide.location.preferences="%VM_APPDATA_ROAMING%\arduino\preferences.txt" ide.default.package="arduino" ide.default.platform="avr" ide.multiplatform="true" ide.includes="arduino.h" ide.platformswithoutpackage="true" ide.sketchfolder.platforms.exclude="avr" ide.includes.fallback="wprogram.h" ide.extension="ino" ide.extension.fallback="pde" ide.versionLTEQ="149" ide.exe="arduino.exe" ide.hosts="atmel" ide.url="http://arduino.cc/en/Main/Software" vm.debug="true" software="ARDUINO" ide.appid="arduino10x" location.sketchbook="C:\Users\ClemensV\Documents\Arduino" build.variant.vmresolved="c:\arduino\hardware\arduino\variants\standard" compiler.path="c:\arduino\hardware\tools\avr\bin\" includes=" -I&quot;c:\arduino\hardware\arduino\cores\arduino&quot;  -I&quot;c:\arduino\hardware\arduino\variants\standard&quot;  -I&quot;C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers\VM_DBG&quot;  -I&quot;c:\arduino\libraries\SPI&quot;  -I&quot;c:\arduino\libraries\Ethernet&quot;  -I&quot;c:\arduino\libraries\Ethernet\utility&quot;" build.path="C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet" build.project_name="LedBlinkerArduino" build.variant.path="c:\arduino\hardware\arduino\variants\standard" archive_file="core.a" object_file="C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\utility\w5100.cpp.o" source_file="c:\arduino\libraries\Ethernet\utility\w5100.cpp" object_files="&quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\LedBlinkerArduino.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\VM_DBG\VM_mem_check.c.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\VM_DBG\VM_DBG.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\SPI\SPI.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\Dhcp.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\Dns.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\Ethernet.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\EthernetClient.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\EthernetServer.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\EthernetUdp.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\utility\socket.cpp.o&quot; &quot;C:\Users\ClemensV\AppData\Local\VMicro\Arduino\Builds\LedBlinkerArduino\ethernet\Ethernet\utility\w5100.cpp.o&quot; " build.architecture="avr" vmresolved.compiler.path="c:\arduino\hardware\tools\avr\bin\" vmresolved.tools.path="c:\arduino\hardware\tools\avr" />
     </Platform>
-    <Debug DebugMode="" DebugEnabled="1" />
+    <Debug DebugEnabled="1" DebugMode="Full" />
     <VCCodeModel>
       <VCCodeMacros />
     </VCCodeModel>
     <BreakPoints>
-      <BreakPoint Index="1" Name="SwitchServer.cs, line 150 character 49" Id="f1d43a1e-f52f-417b-a867-d70c7ecadef5" Enabled="1" Message="" MessageTextType="2" PreProcessedMessage="" Condition="" ConditionType="1" CurrentHits="0" File="c:\git\led-switcher\ledblinkerserver\switchserver.cs" FileLine="150" FileColumn="49" FunctionName="LedBlinkService.SwitchServer.RunDeviceEndpoint(IPEndPoint deviceEP, MessagingFactory messagingFactory)" FunctionLineOffset="112" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C#" LocationType="3" Tag="&lt;vmbp Id='f1d43a1e-f52f-417b-a867-d70c7ecadef5'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="1">
-        <Source>143	                                                queueReceive = null;
-144	                                            }
-145	                                        }
-146	                                        else if (completedTask == pingDelay)
-147	                                        {
-148	                                            try
-149	                                            {
---&gt;150	                                                if (pingDelay.IsCanceled)
-151	                                                {
-152	                                                    cancelPing = new CancellationTokenSource();
-153	                                                }
-154	                                                else
-155	                                                {
-156	                                                    await deviceConnectionStream.WriteAsync(PingFrame, 0, PingFrame.Length);
-157	                                                }
-158	                                            }
-159	                                            finally
+      <BreakPoint Index="1" Name="LedBlinkerArduino.ino, line 40" Id="3ec673ef-5032-4f61-9f5e-f4f6dba28a09" Enabled="1" Message="{millis()}" MessageTextType="2" PreProcessedMessage="{0}" Condition="millis()&gt;0 || millis()&gt;1" ConditionType="1" CurrentHits="0" File="c:\git\led-switcher\ledblinkerarduino\ledblinkerarduino.ino" FileLine="40" FileColumn="1" FunctionName="" FunctionLineOffset="1" FunctionColumnOffset="1" HitCountTarget="250" HitCountType="4" Language="C++" LocationType="3" Tag="&lt;vmbp Id='3ec673ef-5032-4f61-9f5e-f4f6dba28a09'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="1">
+        <Source>33	}
+34	
+35	void turnLedOff()
+36	{
+37		digitalWrite(LED_PIN, LOW);
+38	}
+39	
+--&gt;40	void loop() 
+41	{
+42		if ( !connected || !client.connected() )
+43		{
+44			char* host = "cv-ledblinker.cloudapp.net";
+45			//char* host = "192.168.2.156";
+46	
+47			client.setTimeout(10000);
+48			connected = client.connect(host, 10100);
+49			if ( connected ) 
 </Source>
-      </BreakPoint>
-      <BreakPoint Index="2" Name="SwitchServer.cs, line 117 character 49" Id="b2cbce76-077a-496e-b88d-9bfb55a04191" Enabled="1" Message="" MessageTextType="2" PreProcessedMessage="" Condition="" ConditionType="1" CurrentHits="0" File="c:\git\led-switcher\ledblinkerserver\switchserver.cs" FileLine="117" FileColumn="49" FunctionName="LedBlinkService.SwitchServer.RunDeviceEndpoint(IPEndPoint deviceEP, MessagingFactory messagingFactory)" FunctionLineOffset="79" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C#" LocationType="3" Tag="&lt;vmbp Id='4d0ed3bf-38fd-46b8-b8f0-da16753f98f5'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="1">
-        <Source>110	                                            }
-111	                                        }
-112	                                        else if (completedTask == queueReceive)
-113	                                        {
-114	                                            try
-115	                                            {
-116	                                                // read from the queue completed
---&gt;117	                                                var message = queueReceive.Result;
-118	                                                if (message != null)
-119	                                                {
-120	                                                    var command = message.Properties["Cmd"] as string;
-121	                                                    if (command != null)
-122	                                                    {
-123	                                                        switch (command.ToUpperInvariant())
-124	                                                        {
-125	                                                            case "ON":
-126	                                                                pendingSessions.Enqueue(message.ReplyToSessionId);
-</Source>
-      </BreakPoint>
-      <BreakPoint Index="3" Name="SwitchServer.cs, line 94 character 57" Id="3eaab9b2-9a32-4266-a9e7-2b6831e7876a" Enabled="1" Message="" MessageTextType="2" PreProcessedMessage="" Condition="" ConditionType="1" CurrentHits="0" File="c:\git\led-switcher\ledblinkerserver\switchserver.cs" FileLine="94" FileColumn="57" FunctionName="LedBlinkService.SwitchServer.RunDeviceEndpoint(IPEndPoint deviceEP, MessagingFactory messagingFactory)" FunctionLineOffset="56" FunctionColumnOffset="1" HitCountTarget="1" HitCountType="1" Language="C#" LocationType="3" Tag="&lt;vmbp Id='5d3541c6-ba79-4ce4-9e73-01ed6eb55a52'/&gt;" Type="1" ToString="System.__ComObject" BreakWhenHit="1">
-        <Source>87	                                            try
-88	                                            {
-89	                                                // read from the socket completed and not a ping
-90	                                                if (socketRead.Result == 1)
-91	                                                {
-92	                                                    if (readBuffer[0] != PingFrame[0])
-93	                                                    {
---&gt;94	                                                        await responseQueueSender.SendAsync(new BrokeredMessage()
-95	                                                            {
-96	                                                                SessionId = pendingSessions.Dequeue(),
-97	                                                                Properties = {{"Ack", (int) readBuffer[0]}}
-98	                                                            });
-99	                                                    }
-100	                                                }
-101	                                                else
-102	                                                {
-103	                                                    // no more data from the socket. Break out of the loop.
-</Source>
+        <MessageVariables>
+          <MessageVariable Name="millis()" Index="1" />
+        </MessageVariables>
       </BreakPoint>
     </BreakPoints>
   </Program>

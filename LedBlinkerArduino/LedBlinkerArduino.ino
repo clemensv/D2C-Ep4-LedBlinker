@@ -41,8 +41,8 @@ void loop()
 {
 	if ( !connected || !client.connected() )
 	{
-		//char* host = "cv-ledblinker.cloudapp.net";
-		char* host = "192.168.2.156";
+		char* host = "cv-ledblinker.cloudapp.net";
+		//char* host = "192.168.2.156";
 
 		client.setTimeout(10000);
 		connected = client.connect(host, 10100);
