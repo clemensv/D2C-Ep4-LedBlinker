@@ -47,7 +47,7 @@
       <AdditionalIncludeDirectories>c:\arduino\hardware\arduino\cores\arduino;c:\arduino\hardware\arduino\variants\standard;c:\arduino\libraries\SPI;c:\arduino\libraries\SPI\utility;c:\arduino\libraries\Ethernet;c:\arduino\libraries\Ethernet\utility;c:\arduino\hardware\tools\avr\avr\include\;c:\arduino\hardware\tools\avr\avr\include\avr\;c:\arduino\hardware\tools\avr\avr\;c:\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\git\led-switcher\LedBlinkerArduino\Visual Micro\.LedBlinkerArduino.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
-      <PreprocessorDefinitions>__AVR_ATmega328P__;ARDUINO=105;__AVR__;F_CPU=16000000L;__cplusplus;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_ATmega328P__;_VMDEBUG=1;ARDUINO=105;ARDUINO_MAIN;__AVR__;F_CPU=16000000L;__cplusplus;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

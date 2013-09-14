@@ -1,34 +1,33 @@
 namespace LedBlinkService
 {
     using System;
-    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.SelfHost;
+    using Microsoft.ServiceBus.Messaging;
+    using Ninject;
 
     public static class SwitchServer
     {
         static int timeout = 10000;
-        static readonly ConcurrentDictionary<int, TcpClient> Connections =
-            new ConcurrentDictionary<int, TcpClient>();
-        static AutoResetEvent ackAutoReset = new AutoResetEvent(false);
         static readonly TaskCompletionSource<bool> ClosingEvent = new TaskCompletionSource<bool>();
         static readonly byte[] PingFrame = { 0x00 };
         static readonly byte[] OnFrame = { 0x01 };
         static readonly byte[] OffFrame = { 0x02 };
 
-        public static void Run(IPEndPoint deviceEndPoint, IPEndPoint controlEndPoint)
+        public static void Run(IPEndPoint deviceEndPoint, IPEndPoint controlEndPoint, MessagingFactory messagingFactory)
         {
             Task.WaitAll(new[]
             {
-                RunControlEndpoint(controlEndPoint), 
-                RunDeviceEndpoint(deviceEndPoint)
+                RunControlEndpoint(controlEndPoint, messagingFactory), 
+                RunDeviceEndpoint(deviceEndPoint, messagingFactory)
             });
         }
 
@@ -37,12 +36,10 @@ namespace LedBlinkService
             ClosingEvent.SetResult(true);
         }
 
-        static async Task RunDeviceEndpoint(IPEndPoint deviceEP)
+        static async Task RunDeviceEndpoint(IPEndPoint deviceEP, MessagingFactory messagingFactory)
         {
             var deviceServer = new TcpListener(deviceEP);
             deviceServer.Start(10);
-            var pingTimer = new Timer(s => PingConnections(), Connections, TimeSpan.FromSeconds(55),
-                TimeSpan.FromSeconds(55));
 
             try
             {
@@ -53,35 +50,128 @@ namespace LedBlinkService
                     {
                         try
                         {
+                            var pendingSessions = new Queue<string>();
                             connection.NoDelay = true; // flush writes immediately to the wire
                             connection.ReceiveTimeout = timeout;
-                            NetworkStream stream = connection.GetStream();
+                            NetworkStream deviceConnectionStream = connection.GetStream();
                             var readBuffer = new byte[64];
-                            if (await stream.ReadAsync(readBuffer, 0, 4) == 4)
+                            if (await deviceConnectionStream.ReadAsync(readBuffer, 0, 4) == 4)
                             {
                                 int deviceId = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(readBuffer, 0));
-                                Connections[deviceId] = connection;
+
                                 try
                                 {
+                                    Task<BrokeredMessage> queueReceive = null;
+                                    Task<int> socketRead = null;
+                                    Task pingDelay = null;
+                                    var cancelPing = new CancellationTokenSource();
+
+                                    // set up the receiver for the per-device queue and senbder for the response queue
+                                    var deviceQueueReceiver = messagingFactory.CreateMessageReceiver(string.Format("dev-{0:X8}", deviceId), ReceiveMode.PeekLock);
+                                    var responseQueueSender = messagingFactory.CreateMessageSender(string.Format("ingress"));
+
                                     do
                                     {
-                                        if (await stream.ReadAsync(readBuffer, 0, 1) == 1)
+                                        // receive from the queue
+                                        queueReceive = queueReceive ?? deviceQueueReceiver.ReceiveAsync();
+                                        // read from the socket
+                                        socketRead = socketRead ?? deviceConnectionStream.ReadAsync(readBuffer, 0, 1);
+                                        // ping delay
+                                        pingDelay = pingDelay ?? Task.Delay(TimeSpan.FromSeconds(235), cancelPing.Token);
+
+                                        // wait for any of the four operations (including completion) to be done
+                                        var completedTask = await Task.WhenAny(queueReceive, socketRead, pingDelay, ClosingEvent.Task);
+
+                                        if (completedTask == socketRead)
                                         {
-                                            if (readBuffer[0] == 0x00) // ACK
+                                            try
                                             {
-                                                ackAutoReset.Set();
+                                                // read from the socket completed and not a ping
+                                                if (socketRead.Result == 1)
+                                                {
+                                                    if (readBuffer[0] != PingFrame[0])
+                                                    {
+                                                        await responseQueueSender.SendAsync(new BrokeredMessage()
+                                                            {
+                                                                SessionId = pendingSessions.Dequeue(),
+                                                                Properties = {{"Ack", (int) readBuffer[0]}}
+                                                            });
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // no more data from the socket. Break out of the loop.
+                                                    break;
+                                                }
+                                            }
+                                            finally
+                                            {
+                                                socketRead = null;
+                                            }
+                                        }
+                                        else if (completedTask == queueReceive)
+                                        {
+                                            try
+                                            {
+                                                // read from the queue completed
+                                                var message = queueReceive.Result;
+                                                if (message != null)
+                                                {
+                                                    var command = message.Properties["Cmd"] as string;
+                                                    if (command != null)
+                                                    {
+                                                        switch (command.ToUpperInvariant())
+                                                        {
+                                                            case "ON":
+                                                                pendingSessions.Enqueue(message.ReplyToSessionId);
+                                                                await deviceConnectionStream.WriteAsync(OnFrame, 0, OnFrame.Length);
+                                                                await message.CompleteAsync();
+                                                                cancelPing.Cancel();
+                                                                break;
+                                                            case "OFF":
+                                                                pendingSessions.Enqueue(message.ReplyToSessionId);
+                                                                await deviceConnectionStream.WriteAsync(OffFrame, 0, OffFrame.Length);
+                                                                await message.CompleteAsync();
+                                                                cancelPing.Cancel();
+                                                                break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            finally
+                                            {
+                                                queueReceive = null;
+                                            }
+                                        }
+                                        else if (completedTask == pingDelay)
+                                        {
+                                            try
+                                            {
+                                                if (pingDelay.IsCanceled)
+                                                {
+                                                    cancelPing = new CancellationTokenSource();
+                                                }
+                                                else
+                                                {
+                                                    await deviceConnectionStream.WriteAsync(PingFrame, 0, PingFrame.Length);
+                                                }
+                                            }
+                                            finally
+                                            {
+                                                pingDelay = null;
                                             }
                                         }
                                         else
                                         {
+                                            // closing event was fired
                                             break;
                                         }
-                                    } while (true);
+                                    }
+                                    while (true);
                                 }
                                 finally
                                 {
                                     connection.Close();
-                                    Connections[deviceId] = null;
                                 }
                             }
                             else
@@ -109,65 +199,19 @@ namespace LedBlinkService
             }
             finally
             {
-                pingTimer.Dispose();
                 deviceServer.Stop();
             }
         }
 
-        static void PingConnections()
+
+        static async Task RunControlEndpoint(IPEndPoint controlEP, MessagingFactory messagingFactory)
         {
-            Task.WaitAll(Connections.Values.Where(c => c != null).Select(c => c.GetStream().WriteAsync(PingFrame, 0, PingFrame.Length)).ToArray());
-        }
+            var config = new HttpSelfHostConfiguration(new UriBuilder(Uri.UriSchemeHttp, "localhost", controlEP.Port).Uri);
 
+            var injector = new StandardKernel();
+            injector.Bind<MessagingFactory>().ToConstant(messagingFactory);
+            config.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(injector);
 
-        public static async Task<bool> Switch(int id, bool state)
-        {
-            TcpClient client;
-
-            if (Connections.TryGetValue(id, out client) && client != null)
-            {
-                try
-                {
-                    var networkStream = client.GetStream();
-                    if (state)
-                    {
-                        await networkStream.WriteAsync(OnFrame, 0, OnFrame.Length);
-                    }
-                    else
-                    {
-                        await networkStream.WriteAsync(OffFrame, 0, OffFrame.Length);
-                    }
-
-                    if (ackAutoReset.WaitOne(timeout))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        client.Close();
-                        Connections[id] = null;
-                        return false;
-                    }
-                }
-                catch (SocketException)
-                {
-                    client.Close();
-                    Connections[id] = null;
-                }
-                catch (IOException)
-                {
-                    client.Close();
-                    Connections[id] = null;
-                }
-            }
-            return false;
-        }
-
-
-        static async Task RunControlEndpoint(IPEndPoint controlEP)
-        {
-            var config = new HttpSelfHostConfiguration(
-                new UriBuilder(Uri.UriSchemeHttp, "localhost", controlEP.Port).Uri);
             config.Routes.MapHttpRoute("API", "{controller}/{id}", new { id = RouteParameter.Optional });
             var controlServer = new HttpSelfHostServer(config);
             try
