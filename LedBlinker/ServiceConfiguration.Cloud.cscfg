@@ -3,8 +3,8 @@
   <Role name="LedBlinkService">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cvledblinker;AccountKey=2PLIDX2AeCmYstYU6DtIWfFawZ8JPM4jtcocWDgcJQi4WHc/B8zWywa+7E3R7pHWJdubCnce025oS6ODj35i8Q==" />
-      <Setting name="serviceBusConnectionString" value="Endpoint=sb://clemensv-euw-2.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=rqK7h4/dTKT4qM2PlkVV8uljxldyOhhLVwAbd4s8euM=" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
+      <Setting name="serviceBusConnectionString" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>
